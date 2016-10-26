@@ -6,20 +6,20 @@ import re
 import urllib
 
 def is_valid_url(input_txt):
-    if re.match(r'http://jav123.com/\d+', input_txt) is not None:
+    if re.match(r'http://jav123.com/zh/\d+', input_txt) is not None:
         return True
     return False
 
 def find_video_path(jav_url):
     page = urllib.urlopen(jav_url).read()
-    mo = re.search(r'http://sixav.com/video.php\?videoid=\w+', page)
+    mo = re.search(r'//avcdn1.xyz/e/wp-embed\.php\?url=[^"]+', page)
     if mo is None:
         print('Error on opening video page')
         return
     
-    embed_url = mo.group(0)
+    embed_url = 'http:' + mo.group(0)
     embed_page = urllib.urlopen(embed_url).read()
-    mo_embed = re.search(r'http://[^"]+', embed_page)
+    mo_embed = re.search(r'https://redirector[^"]+', embed_page)
     if mo_embed is None:
         print('Error on opening embed page')
         return
